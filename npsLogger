@@ -15,4 +15,5 @@ Get-EventLog -LogName System -After (get-date).addminutes(-60) -EntryType error 
 Start-Sleep -Seconds 1.5
 
 
+
 Get-EventLog -LogName System -After (get-date).addminutes(-60) -EntryType error | Export-CSV C:\logpath.csv -append

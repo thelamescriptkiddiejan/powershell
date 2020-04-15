@@ -8,8 +8,7 @@ $csvFULLpfad = ("$csvDrive\$csvPath\$logordner\$csvName")
 $checkpath = ("$csvDrive\$csvPath\$logordner")
 
 $infostring = [System.String]::Concat("`n", "     ", $logordner, " NICHT vorhanden!", "`n", "   Erstelle ", $csvFULLpfad, "!")
- 
-#--------------------------------------------------------
+#-------------------------------------------------------------------------
 
 
 

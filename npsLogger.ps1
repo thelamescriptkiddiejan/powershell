@@ -11,6 +11,7 @@ $csvcombinepath = ("$csvDrive\$csvPath")
 $csvFULLpfad = ("$csvDrive\$csvPath\$logordner\$csvName")
 $checkpath = ("$csvDrive\$csvPath\$logordner")
 $infostring = [System.String]::Concat("`n", "     ", $logordner, " NICHT vorhanden!", "`n", "   Erstelle ", $csvFULLpfad, "!")
+$infostring2 = [System.String]::Concat("`n", "     ", $logordner, " vorhanden!", "`n")
  
 #-----------Teste ob der Pfad vorhanden ist-------------------
 If(!(test-path $checkpath))
@@ -19,11 +20,14 @@ If(!(test-path $checkpath))
     Write-Host $infostring
     
     New-Item -Path $csvcombinepath -Name $logordner -ItemType "directory"
-    Get-EventLog -LogName System -After (get-date).addminutes(-60) -EntryType error -Source "NPS" | Export-CSV $csvFULLpfad
+    if (!(test-path $csvFULLpath))
+    {
+        Get-EventLog -LogName System -After (get-date).addminutes(-60) -EntryType error -Source "NPS" | Export-CSV $csvFULLpfad
+    }
 }
 else {
 #-----------Pfad nicht vorhanden--------------------------------
-    Write-Host "Der Pfad ist vorhanden und die Datei", $csvname, "wurde dort abgelegt."
+    Write-Host $infostring2
     Get-EventLog -LogName System -After (get-date).addminutes(-60) -EntryType error -Source "NPS" | Export-CSV $csvFULLpfad -append 
 }
 #-------------------------------------------------------------------------
